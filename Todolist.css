@@ -1,26 +1,17 @@
 <html>
    <head>
       <style>
-      #xy123 {
+      .medium {
+         color:orange;
+      }
+      .low {
+         color: gray;
+      }
+      .high {
          color: red;
-         text-decoration: line-through;
       }
-      #ab456 {
+      .done {
          color: red;
-         text-decoration: line-through;
       }
-      #xyz123 {
-         color: gray;
-      }
-      #a456 {
-         color: gray;
-      }
-      #abc456 {
-         color: orange;
-      }
-      #x123 {
-         color: orange;
-      }
-      #a {
-         color: gray;
-         text-decoration: line-through;
+ </body>
+ </html>
