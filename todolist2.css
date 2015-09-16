@@ -1,9 +1,6 @@
 <html>
    <head>
       <style>
-      .low {
-         color: black;
-         background-color: gray;
       }
       .high {
          color: white;
@@ -13,6 +10,9 @@
          color: brown;
          background-color: orange;
       }
+      .low {
+         color: black;
+         background-color: gray;
       .done {
          color: cyan;
          background-color: black;
