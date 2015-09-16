@@ -1,7 +1,6 @@
 <html>
    <head>
       <style>
-      }
       .high {
          color: white;
          background-color: red;
@@ -21,6 +20,7 @@
          color: black;
          background-color: blue;
          width: 250px;
+      }
  </style>
  </head>
  </html>
