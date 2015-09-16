@@ -1,0 +1,18 @@
+<html>
+   <head>
+      <style>
+      .low {
+         color: gray;
+      }
+      .high {
+         color: red;
+      }
+      .medium {
+         color: orange;
+      }
+      .done {
+         color: black;
+      }
+ </style>
+ </head>
+ </html>
