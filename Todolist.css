@@ -1,14 +1,14 @@
 <html>
    <head>
       <style>
-      .medium {
-         color: yellow;
-      }
       .low {
          color: gray;
       }
       .high {
          color: red;
+      }
+      .medium {
+         color: orange;
       }
       .done {
          text-decoration: line-through;
