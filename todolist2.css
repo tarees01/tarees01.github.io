@@ -3,15 +3,19 @@
       <style>
       .low {
          color: black;
+         background-color: gray;
       }
       .high {
          color: white;
+         background-color: red;
       }
       .medium {
          color: brown;
+         background-color: orange;
       }
       .done {
          color: cyan;
+         background-color: black;
       }
  </style>
  </head>
