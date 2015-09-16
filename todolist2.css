@@ -2,10 +2,6 @@
    <head>
       <style>
       
-      .high {
-         color: white;
-         background-color: red;
-         width: 250px;
       }
       .medium {
          color: brown;
@@ -22,6 +18,10 @@
          background-color: blue;
          width: 250px;
       }
+       .high {
+         color: white;
+         background-color: red;
+         width: 250px;
  </style>
  </head>
  </html>
