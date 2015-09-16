@@ -11,7 +11,7 @@
          color: red;
       }
       .done {
-         color: red;
+         text-decoration: line-through;
       }
  </body>
  </html>
