@@ -1,16 +1,20 @@
 <html>
    <head>
       <style>
-      p {
+      #XYZ123 {
          color: blue;
       }
-      p#abc456 {
+      #abc456 {
          font-size: 18pt;
       }
       </style>
    </head>
    <body>
       <un>
+      id="xyz123">The paragraph text should be unchanged
+      id="abc456">This is another paragraph with a different identifier.
+      <p id="xyz123">The paragraph text should be unchanged</p>
+      <p id="abc456">This is another paragraph with a different identifier.</p>
       <p id="xyz123">The paragraph text should be unchanged</p>
       <p id="abc456">This is another paragraph with a different identifier.</p>
       </un>
