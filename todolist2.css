@@ -2,16 +2,16 @@
    <head>
       <style>
       .low {
-         color: gray;
+         color: black;
       }
       .high {
-         color: red;
+         color: white;
       }
       .medium {
-         color: orange;
+         color: brown;
       }
       .done {
-         color: black;
+         color: cyan;
       }
  </style>
  </head>
