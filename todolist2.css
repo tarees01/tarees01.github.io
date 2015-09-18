@@ -9,14 +9,14 @@
          color: brown;
          background-color: orange;
       }
+      .low {
+         color: black;
+         background-color: blue;
+      }
       .done {
          color: cyan;
          background-color: black;
          text-decoration: line-through;
-      }
-      .low {
-         color: black;
-         background-color: blue;
       }
  </style> 
  </head>
