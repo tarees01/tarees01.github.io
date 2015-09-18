@@ -4,22 +4,18 @@
       .high {
          color: white;
          background-color: red;
-         width: 250px;
        }
       .medium {
          color: brown;
          background-color: orange;
-         width: 250px;
       }
       .done {
          color: cyan;
          background-color: black;
-         width: 250px;
       }
       .low {
          color: black;
          background-color: blue;
-         width: 250px;
       }
  </style> 
  </head>
