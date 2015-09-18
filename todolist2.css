@@ -2,8 +2,8 @@
    <head>
       <style>
       .high {
-         background-color: red;
          color: white;
+         background-color: red;
        }
       .medium {
          color: brown;
@@ -11,7 +11,7 @@
       }
       .low {
          color: black;
-         background-color: blue;
+         background-color: cyan;
       }
       .done {
          color: cyan;
