@@ -18,6 +18,13 @@
          background-color: black;
          text-decoration: line-through;
       }
+      section {
+         height: 200px;
+         width 300px;
+         overflow: auto;
+         margin: 10 10 10 10;
+         border: 2px dptted rgb(0,0,0);
+      }
  </style> 
  </head>
  </html>
