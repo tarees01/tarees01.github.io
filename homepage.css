@@ -25,10 +25,7 @@
          footer {
              clear: both;
              background-color: yellow;
-         }
-         footer {
-             clear: both;
-             background-color: yellow;
+             text-size: 12px;
          }
          body {
              background-color: white;
