@@ -11,7 +11,7 @@
          aside {
              float: right;
              width: 80%;
-             height: 600px;
+             height: 650px;
              background-color: lightblue;
              color: white;
              font-style: italic;
@@ -19,7 +19,7 @@
          section {
              float: left;
              width: 20%;
-             height: 600px;
+             height: 650px;
              background-color: lightgreen;
          }
          footer {
