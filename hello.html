@@ -1,14 +1,13 @@
 <html>
    <body>
       <h2>Hello</h2>
-      <button onclick="changeThisPageFunc();">Click Me</button>
       <label for="redi"><button onclick="changeThisPageFunc();">Click Me</button>:</label>
-      <input type="text" id="redi" min="0" value="255" /> <br>
+      <input type="text" id="redi" /> <br>
       <script type="text/javascript">
          changeThisPageFunc = function() {
-            red = document.querySelector('#redi').value;
+            hello = document.querySelector('#redi').value;
             document.body.style.backgroundColor = "lightblue";
-            document.body.innerHTML = "<h1>I am a little blue today</h1>";
+            document.body.innerHTML = "<h1>redi</h1>";
          }
       </script>
    </body>
