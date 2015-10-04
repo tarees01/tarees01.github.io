@@ -1,11 +1,14 @@
 <html>
    <body>
-      <h2>Hello</h2>
+      <h2 id=ah2 >Hello</h2>
       <label for="redi"><button onclick="changeThisPageFunc();">Click Me</button>:</label>
       <input type="text" id="redi" />
       <script type="text/javascript">
          changeThisPageFunc = function() {
-             document.body.innerHTML = "<h1> <input type="text" id="redi" /> </h1>";
+            var mymain;
+            myMain = document.querySelector('main');
+            red = document.querySelector('#redi').value;
+            myMain.innerHTML = "<h2> document.querySelector('#redi').value; <h2>";
          }
       </script>
    </body>
