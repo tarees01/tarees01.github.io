@@ -1,12 +1,13 @@
 
 <html>
-   <head>
+  <head>
      <style>
        aside {
-             width: 600px;
+             width: 590px;
              height: 20px;
              background-color: lightblue;
              text-align: center;
+             margin: 10px
          }
         main {
              background-color: lightblue;
@@ -22,22 +23,29 @@
          }
      </style>
    </head>
-  <h1> Busy Busy </h1>
-      <body>
-          <main>
-          </main>
-        <aside>
-        <label for="redi">Enter Text:</label>
-        <input type="text" id="redi" value="Enter the to do list" />
-        
-       <select id="priority">
-         <option>High</option>
-         <option>Medium</option>
-         <option>low</option>
-        </select>
-        <button>New</button>
-        </aside>
-
-
-      </body>
+   <h1> Busy Busy </h1>
+   <body>
+   <main>
+   </main>
+   <aside>
+     <li id="example1"></li>
+     <input type="text" id="redi" value="Enter the to do list" />
+     <select id="priority">
+     <option>High</option>
+     <option>Medium</option>
+     <option>low</option>
+     </select>
+     <input type="button" value="New" onclick="appendNewText()" />
+   </aside> 
+    <script type="text/javascript">
+      function appendNewText()
+      {
+        t = document.querySelector("#main")
+        newText = document.createTextNode( document.querySelector('#redi').value);
+        para = document.querySelector('#example1');
+        para.appendChild(newText);
+      }
+    </script>
+     
+  </body>
 </html>
