@@ -1,4 +1,3 @@
-
 <html>
   <head>
      <style>
@@ -13,6 +12,7 @@
              background-color: lightblue;
              width: 600px;
              height: 300px;
+             text-align: left;
           
          }
        body {
@@ -25,10 +25,7 @@
    </head>
    <h1> Busy Busy </h1>
    <body>
-   <main>
-   </main>
    <aside>
-     <li id="example1"></li>
      <input type="text" id="redi" value="Enter the to do list" />
      <select id="priority">
      <option>High</option>
@@ -36,14 +33,20 @@
      <option>low</option>
      </select>
      <input type="button" value="New" onclick="appendNewText()" />
-   </aside> 
+   </aside>
+   <main>
+   </main>
     <script type="text/javascript">
       function appendNewText()
       {
-        t = document.querySelector("#main")
-        newText = document.createTextNode( document.querySelector('#redi').value);
-        para = document.querySelector('#example1');
-        para.appendChild(newText);
+        t = document.querySelector("main")
+        ul = document.createElement("ul")
+        li = document.createElement("li")
+        li1 = document.createTextNode(document.querySelector('#redi').value)
+        li.appendChild(li1)
+        ul.appendChild(li)
+        t.appendChild(ul)
+        
       }
     </script>
      
