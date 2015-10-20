@@ -10,7 +10,7 @@
       .Medium {
          color: orange;
       }
-      .done {
+      .Done {
          text-decoration: line-through;
       }
        aside {
@@ -43,6 +43,7 @@
      <option>High</option>
      <option>Medium</option>
      <option>Low</option>
+     <option>Done</option>
      </select>
      <input type="button" value="New" onclick="NewText()" />
    </aside>
@@ -63,14 +64,12 @@
         t.appendChild(ul)
         
       }
+      var mycb = document.createElement("Done");
       boxChecked = function(){
-        
-        //this.parentNode.classname = "done"
-        this.parentNode.classList.add("done").romove("done")
+        this.parentNode.classList.add("Done").remove("Done")
       }
       mycb.onclick = boxChecked;
     </script>
      
   </body>
 </html>
- 
