@@ -64,12 +64,20 @@
         t.appendChild(ul)
         
       }
-      var mycb = document.createElement("Done");
       boxChecked = function(){
-        this.parentNode.classList.add("Done").remove("Done")
+        if (){
+          this.parentNode.classList.add("Done");
       }
-      mycb.onclick = boxChecked;
+        else{
+          this.parentNode.classList.romove("Done");
+        }
+      }
     </script>
-     
+<script type = "text/javascript" src="http://bnmnetp.gitub.io/CS130/listsaver.js"></script>
+    localSave(id of your Ul as a string)
+    restoreList(id of your UL as a string, doneTask)
+<script type ="text/javascript">
+  window.onload = funcation() { restoreList("tasklist", doneTask)}
+</script
   </body>
 </html>
