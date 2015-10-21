@@ -1,0 +1,13 @@
+
+       .Low {
+         color: gray;
+      }
+      .High {
+         color: red;
+      }
+      .Medium {
+         color: orange;
+      }
+      .Done {
+         text-decoration: line-through;
+      }
