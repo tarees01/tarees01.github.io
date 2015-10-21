@@ -1,6 +1,5 @@
-
-       .Low {
-         color: gray;
+      .Low {
+        color: gray;
       }
       .High {
          color: red;
@@ -11,14 +10,14 @@
       .Done {
          text-decoration: line-through;
       }
-        aside {
+       aside {
              width: 590px;
              height: 20px;
              background-color: lightblue;
              text-align: center;
              margin: 10px
          }
-        main {
+       main {
              background-color: lightblue;
              width: 600px;
              height: 300px;
