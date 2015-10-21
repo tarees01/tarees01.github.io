@@ -1,4 +1,4 @@
-<script type="text/javascript">
+
       NewText = function(){
         t = document.querySelector("main")
         ul = document.createElement("ul")
@@ -21,4 +21,3 @@
           this.parentNode.classList.romove("Done");
         }
       }
-</script>
