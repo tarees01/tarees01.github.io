@@ -11,3 +11,23 @@
       .Done {
          text-decoration: line-through;
       }
+        aside {
+             width: 590px;
+             height: 20px;
+             background-color: lightblue;
+             text-align: center;
+             margin: 10px
+         }
+        main {
+             background-color: lightblue;
+             width: 600px;
+             height: 300px;
+             text-align: left;
+          
+         }
+       body {
+             background-color: white;
+             width: 450px;
+             height: 350px;
+             text-align: center;
+         }
