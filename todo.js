@@ -11,13 +11,19 @@
         li.className = document.querySelector('#priority').value
         ul.appendChild(li)
         t.appendChild(ul)
+        var checkbox;
+        checkbox.type = "checkbox";
+        checkbox.onclick = boxChecked;
+        localSave("tasklist");
         
       }
       boxChecked = function(){
         if (this.checked){
           this.parentNode.classList.add("Done");
+          localSave("tasklist");
       }
         else{
           this.parentNode.classList.romove("Done");
+          localSave("tasklist");
         }
       }
