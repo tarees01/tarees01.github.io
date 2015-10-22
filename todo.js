@@ -17,11 +17,11 @@
       }
       boxChecked = function(){
         if (this.checked){
-          this.parentNode.classList.add("Done");
+          this.parentNode.classList.add("done");
           localSave("tasklist");
       }
         else{
-          this.parentNode.classList.romove("Done");
+          this.parentNode.classList.remove("done");
           localSave("tasklist");
         }
       }
