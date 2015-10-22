@@ -1,6 +1,5 @@
 
       NewText = function(){
-        ul = document.createElement("ul")
         li = document.createElement("li")
         ch = document.createElement("input")
         ch.type = "checkbox"
@@ -9,7 +8,6 @@
         li.appendChild(ch)
         li.appendChild(li1)
         li.className = document.querySelector('#priority').value
-        ul.appendChild(li)
         localSave("tasklist");
         
       }
