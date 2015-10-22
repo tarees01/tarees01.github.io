@@ -1,6 +1,5 @@
 
       NewText = function(){
-        t = document.querySelector("main")
         ul = document.createElement("ul")
         li = document.createElement("li")
         ch = document.createElement("input")
@@ -11,7 +10,6 @@
         li.appendChild(li1)
         li.className = document.querySelector('#priority').value
         ul.appendChild(li)
-        t.appendChild(ul)
         localSave("tasklist");
         
       }
