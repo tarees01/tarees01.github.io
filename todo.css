@@ -10,19 +10,19 @@
       .Done {
          text-decoration: line-through;
       }
-       main {
-             background-color: lightblue;
-             width: 600px;
-             height: 300px;
-             text-align: left;
-          
-         }
        aside {
              width: 590px;
              height: 20px;
              background-color: lightblue;
              text-align: center;
              margin: 10px
+         }
+       main {
+             background-color: lightblue;
+             width: 600px;
+             height: 300px;
+             text-align: left;
+          
          }
        body {
              background-color: white;
