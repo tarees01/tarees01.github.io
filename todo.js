@@ -11,7 +11,7 @@
         li.appendChild(li1)
         li.className = document.querySelector('#priority').value
         ul.appendChild(li)
-        t.appendChild(ul)
+        t.appendChild(tasklist)
         localSave("tasklist");
         
       }
