@@ -1,7 +1,7 @@
 
  NewText = function(){
         t = document.querySelector("main")
-        ul = document.createElement("ul")
+        ul = document.querySelector("tasklist")
         li = document.createElement("li")
         ch = document.createElement("input")
         ch.type = "checkbox"
