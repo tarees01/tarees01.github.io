@@ -2,7 +2,7 @@
 // at https://console.developers.google.com/.
 // If you run this code from a server other than http://localhost,
 // you need to register your own client ID.
-var OAUTH2_CLIENT_ID = '594379596213-nfrnrc6920sra9ga8vphgi2s3f0ir4vu.apps.googleusercontent.com';
+var OAUTH2_CLIENT_ID = '595419487211-ie9dag1vvi5ijqqpkmaadev1hpr4j5oa.apps.googleusercontent.com';
 var OAUTH2_SCOPES = [
   'https://www.googleapis.com/auth/youtube',
   'https://www.googleapis.com/auth/yt-analytics.readonly'
@@ -95,6 +95,7 @@ function handleAPILoaded() {
       mine: true,
       part: 'id,contentDetails'
     });
+
     request.execute(function(response) {
       if ('error' in response) {
         displayMessage(response.error.message);
@@ -110,6 +111,7 @@ function handleAPILoaded() {
       }
     });
   }
+
   // Calls the Data API to retrieve the items in a particular playlist. In this
   // example, we are retrieving a playlist of the currently authenticated user's
   // uploaded videos. By default, the list returns the most recent videos first.
@@ -119,6 +121,7 @@ function handleAPILoaded() {
       playlistId: listId,
       part: 'snippet'
     });
+
     request.execute(function(response) {
       if ('error' in response) {
         displayMessage(response.error.message);
@@ -130,6 +133,7 @@ function handleAPILoaded() {
           var videoIds = $.map(response.items, function(item) {
             return item.snippet.resourceId.videoId;
           });
+
           // Now that we know the IDs of all the videos in the uploads list,
           // we can retrieve info about each video.
           getVideoMetadata(videoIds);
@@ -139,6 +143,7 @@ function handleAPILoaded() {
       }
     });
   }
+
   // Given an array of video ids, obtains metadata about each video and then
   // uses that metadata to display a list of videos to the user.
   function getVideoMetadata(videoIds) {
@@ -148,6 +153,7 @@ function handleAPILoaded() {
       id: videoIds.join(','),
       part: 'id,snippet,statistics'
     });
+
     request.execute(function(response) {
       if ('error' in response) {
         displayMessage(response.error.message);
@@ -160,8 +166,10 @@ function handleAPILoaded() {
           if (this.statistics.viewCount == 0) {
             return;
           }
+
           var title = this.snippet.title;
           var videoId = this.id;
+
           // Create a new <li> element that contains an <a> element.
           // Set the <a> element's text content to the video's title, and
           // add a click handler that will display Analytics data when invoked.
@@ -174,18 +182,21 @@ function handleAPILoaded() {
           aElement.click(function() {
             displayVideoAnalytics(videoId);
           });
+
           // Call the jQuery.append() method to add the new <a> element to
           // the <li> element, and the <li> element to the parent
           // list, which is identified by the 'videoList' variable.
           liElement.append(aElement);
           videoList.append(liElement);
         });
+
         if (videoList.children().length == 0) {
           displayMessage('Your channel does not have any videos that have been viewed.');
         }
       }
     });
   }
+
   // Requests YouTube Analytics for a video, and displays results in a chart.
   function displayVideoAnalytics(region) {
     if (channelId) {
@@ -193,6 +204,7 @@ function handleAPILoaded() {
       // variable to a different millisecond delta as desired.
       var today = new Date();
       var lastMonth = new Date(today.getTime() - ONE_MONTH_IN_MILLISECONDS);
+
       var request = gapi.client.youtubeAnalytics.reports.query({
         // The start-date and end-date parameters need to be YYYY-MM-DD strings.
         'start-date': formatDateString(lastMonth),
@@ -208,6 +220,7 @@ function handleAPILoaded() {
         filters: 'claimedStatus==claimed;country==US',
 		sort: 'province'
       });
+
       request.execute(function(response) {
         // This function is called regardless of whether the request succeeds.
         // The response either has valid analytics data or an error message.
@@ -221,13 +234,16 @@ function handleAPILoaded() {
       displayMessage('The YouTube user id for the current user is not available.');
     }
   }
+
   // Boilerplate code to take a Date object and return a YYYY-MM-DD string.
   function formatDateString(date) {
     var yyyy = date.getFullYear().toString();
     var mm = padToTwoCharacters(date.getMonth() + 1);
     var dd = padToTwoCharacters(date.getDate());
+
     return yyyy + '-' + mm + '-' + dd;
   }
+
   // If number is a single digit, prepend a '0'. Otherwise, return it as a string.
   function padToTwoCharacters(number) {
     if (number < 10) {
@@ -236,10 +252,12 @@ function handleAPILoaded() {
       return number.toString();
     }
   }
+
   // Calls the Google Chart Tools API to generate a chart of analytics data.
   function displayChart(videoId, response) {
     if ('rows' in response) {
       hideMessage();
+
       // The columnHeaders property contains an array of objects representing
       // each column's title – e.g.: [{name:"day"},{name:"views"}]
       // We need these column titles as a simple array, so we call jQuery.map()
@@ -256,6 +274,7 @@ function handleAPILoaded() {
       // See https://developers.google.com/chart/interactive/docs/datatables_dataviews#arraytodatatable
       var chartDataArray = [columns].concat(response.rows);
       var chartDataTable = google.visualization.arrayToDataTable(chartDataArray);
+
       var chart = new google.visualization.LineChart(document.getElementById('chart'));
       chart.draw(chartDataTable, {
         // Additional options can be set if desired.
@@ -266,12 +285,15 @@ function handleAPILoaded() {
       displayMessage('No data available for video ' + videoId);
     }
   }
+
   // Helper method to display a message on the page.
   function displayMessage(message) {
     $('#message').text(message).show();
   }
+
   // Helper method to hide a previously displayed message on the page.
   function hideMessage() {
     $('#message').hide();
   }
+
   */
