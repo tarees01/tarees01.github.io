@@ -1,5 +1,5 @@
 
-var OAUTH2_CLIENT_ID = 'AIzaSyBiOffKR2dpUI-fb4fLRBzxvCTfsKACVHc';
+var OAUTH2_CLIENT_ID = '594379596213-nfrnrc6920sra9ga8vphgi2s3f0ir4vu.apps.googleusercontent.com';
 var OAUTH2_SCOPES = [
   'https://www.googleapis.com/auth/youtube',
   'https://www.googleapis.com/auth/yt-analytics.readonly'
