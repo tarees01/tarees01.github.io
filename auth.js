@@ -1,5 +1,8 @@
-
-var OAUTH2_CLIENT_ID = '594379596213-nfrnrc6920sra9ga8vphgi2s3f0ir4vu.apps.googleusercontent.com';
+// The client ID is obtained from the Google Developers Console
+// at https://console.developers.google.com/.
+// If you run this code from a server other than http://localhost,
+// you need to register your own client ID.
+var OAUTH2_CLIENT_ID = '595419487211-ie9dag1vvi5ijqqpkmaadev1hpr4j5oa.apps.googleusercontent.com';
 var OAUTH2_SCOPES = [
   'https://www.googleapis.com/auth/youtube',
   'https://www.googleapis.com/auth/yt-analytics.readonly'
@@ -15,6 +18,11 @@ googleApiClientReady = function() {
   gapi.auth.init(checkAuth);
 }
 
+// Attempt the immediate OAuth 2.0 client flow as soon as the page loads.
+// If the currently logged-in Google Account has previously authorized
+// the client specified as the OAUTH2_CLIENT_ID, then the authorization
+// succeeds with no user intervention. Otherwise, it fails and the
+// user interface that prompts for authorization needs to display.
 function checkAuth() {
 console.log('checking authorization');
   gapi.auth.authorize({
@@ -28,12 +36,16 @@ console.log('checking authorization');
 function handleAuthResult(authResult) {
 console.log('handlingresult...');
   if (authResult && !authResult.error) {
+    // Authorization was successful. Hide authorization prompts and show
+    // content that should be visible after authorization succeeds.
     $('.pre-auth').hide();
     $('.post-auth').show();
     loadAPIClientInterfaces();
   } else {
   console.log('un-oh');
   	document.getElementById('login-link').style.display='inline';
+    // Make the #login-link clickable. Attempt a non-immediate OAuth 2.0
+    // client flow. The current function is called when that flow completes.
     $('#login-link').click(function() {
       gapi.auth.authorize({
         client_id: OAUTH2_CLIENT_ID,
@@ -43,7 +55,9 @@ console.log('handlingresult...');
     });
   }
 }
-
+// Load the client interfaces for the YouTube Analytics and Data APIs, which
+// are required to use the Google APIs JS client. More info is available at
+// http://code.google.com/p/google-api-javascript-client/wiki/GettingStarted#Loading_the_Client
 function loadAPIClientInterfaces() {
 	console.log('loading.....');
   gapi.client.load('youtube', 'v3').then(function () {
@@ -59,12 +73,46 @@ function handleAPILoaded() {
 	searchButton.disabled = false;
 }
 
+
+
+
+/*function loadAPIClientInterfaces() {
+    gapi.client.load('youtube', 'v3', function() {
+      gapi.client.load('youtubeAnalytics', 'v1', function() {
+        // After both client interfaces load, use the Data API to request
+        // information about the authenticated user's channel.
+        getUserChannel();
+      });
+    });
+  }*/
+
+  // Calls the Data API to retrieve info about the currently authenticated
+  // user's YouTube channel.
+  /*function getUserChannel() {
+    // https://developers.google.com/youtube/v3/docs/channels/list
+    var request = gapi.client.youtube.channels.list({
+      // "mine: true" indicates that you want to retrieve the authenticated user's channel.
+      mine: true,
+      part: 'id,contentDetails'
+    });
+    request.execute(function(response) {
+      if ('error' in response) {
+        displayMessage(response.error.message);
+      } else {
+        // We will need the channel's channel ID to make calls to the
+        // Analytics API. The channel ID looks like "UCdLFeWKpkLhkguiMZUp8lWA".
+        channelId = response.items[0].id;
+        // This string, of the form "UUdLFeWKpkLhkguiMZUp8lWA", is a unique ID
+        // for a playlist of videos uploaded to the authenticated user's channel.
         var uploadsListId = response.items[0].contentDetails.relatedPlaylists.uploads;
         // Use the uploads playlist ID to retrieve the list of uploaded videos.
         getPlaylistItems(uploadsListId);
       }
     });
   }
+  // Calls the Data API to retrieve the items in a particular playlist. In this
+  // example, we are retrieving a playlist of the currently authenticated user's
+  // uploaded videos. By default, the list returns the most recent videos first.
   function getPlaylistItems(listId) {
     // https://developers.google.com/youtube/v3/docs/playlistItems/list
     var request = gapi.client.youtube.playlistItems.list({
@@ -76,9 +124,14 @@ function handleAPILoaded() {
         displayMessage(response.error.message);
       } else {
         if ('items' in response) {
+          // jQuery.map() iterates through all of the items in the response and
+          // creates a new array that only contains the specific property we're
+          // looking for: videoId.
           var videoIds = $.map(response.items, function(item) {
             return item.snippet.resourceId.videoId;
           });
+          // Now that we know the IDs of all the videos in the uploads list,
+          // we can retrieve info about each video.
           getVideoMetadata(videoIds);
         } else {
           displayMessage('There are no videos in your channel.');
@@ -86,7 +139,8 @@ function handleAPILoaded() {
       }
     });
   }
-
+  // Given an array of video ids, obtains metadata about each video and then
+  // uses that metadata to display a list of videos to the user.
   function getVideoMetadata(videoIds) {
     // https://developers.google.com/youtube/v3/docs/videos/list
     var request = gapi.client.youtube.videos.list({
@@ -108,16 +162,21 @@ function handleAPILoaded() {
           }
           var title = this.snippet.title;
           var videoId = this.id;
-          
+          // Create a new <li> element that contains an <a> element.
+          // Set the <a> element's text content to the video's title, and
+          // add a click handler that will display Analytics data when invoked.
           var liElement = $('<li>');
           var aElement = $('<a>');
-          
+          // The dummy href value of '#' ensures that the browser renders the
+          // <a> element as a clickable link.
           aElement.attr('href', '#');
           aElement.text(title);
           aElement.click(function() {
             displayVideoAnalytics(videoId);
           });
-          
+          // Call the jQuery.append() method to add the new <a> element to
+          // the <li> element, and the <li> element to the parent
+          // list, which is identified by the 'videoList' variable.
           liElement.append(aElement);
           videoList.append(liElement);
         });
@@ -138,7 +197,9 @@ function handleAPILoaded() {
         // The start-date and end-date parameters need to be YYYY-MM-DD strings.
         'start-date': formatDateString(lastMonth),
         'end-date': formatDateString(today),
-       
+        // A future YouTube Analytics API release should support channel==default.
+        // In the meantime, you need to explicitly specify channel==channelId.
+        // See https://devsite.googleplex.com/youtube/analytics/v1/#ids
         ids: 'channel==' + channelId,
         dimensions: 'province',
         // See https://developers.google.com/youtube/analytics/v1/available_reports for details
