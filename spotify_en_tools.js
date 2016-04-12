@@ -206,3 +206,4 @@ function getSpotifyPlayer(inPlaylist, callback) {
     }
   }
 })(jQuery);
+ 
