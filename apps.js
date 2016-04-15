@@ -69,6 +69,7 @@ var searchResults = data[1];
 for (var i = 0; i < data.query.search.length; i++) {
 var item = data.query.search[i];
 var $li = $('<li></li>');
+
 $li.append('<h3><a href="#" class="snippet-item">' + item.title +  '</a></h3>');
 $li.append(item.snippet);
 $ul.append($li);*/
