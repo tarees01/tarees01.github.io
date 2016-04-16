@@ -12,11 +12,9 @@
  <div id='content' class="container font-light">
     <h1 id='title'> Example 1 - A Simple Playlist</h1>
     <br>
-    <div id='seed' class='centered'>
-        <span> Seed artist:
-            <input title="Artist" type="text"  size=34 id="artist" name="artist" value='God is an Astronaut'/>
-        </span>
-        <button value="Search" id="search-button" name="Search"> Search </button>
+    <div id='searchbar'> 
+	<div id="buttons">
+      	<label> <input id="query" value='' type="text"/><button id="search-button"  onclick="search();">Search</button></label>
     </div>
     <div id="info"> </div>
     <div id="all_results"> </div>
@@ -28,18 +26,6 @@
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="apps.js"></script>
     
-
-	
-</head>
-<body>
-<div id='header'> 
-	<h1> Wikipedia! </h1>
-	</div>
-<div id='searchbar'> 
-	<div id="buttons">
-      	<label> <input id="query" value='' type="text"/><button id="search-button"  onclick="search();">Search</button></label>
-    </div>
-</div>
 <div id="container">
 <div id= 'wiki' height='200'> 
 	<div style="font-size: 12px; font-family: 'Arial'; width: 100%; border: 1px solid black; padding: 20px; overflow: scroll;" id="content"></div>
