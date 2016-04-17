@@ -1,142 +1,134 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Example of the Authorization Code flow with Spotify</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <style type="text/css">
-      #login, #loggedin {
-        display: none;
-      }
-      .text-overflow {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        width: 500px;
-      }
-    </style>
-  </head>
+<html ng-app="PlayerApp">
+	<head>
+		<title>Thirtify</title>
+		<link rel="stylesheet" href="style.css" />
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700' rel='stylesheet' type='text/css'>
+		<script src="bower_components/angular/angular.js"></script>
+		<script src="bower_components/angular-route/angular-route.js"></script>
+		<script src="app.js"></script>
+		<script src="services/auth.js"></script>
+		<script src="services/api.js"></script>
+		<script src="services/playback.js"></script>
+		<script src="services/playqueue.js"></script>
+		<script src="directives/playlistcover.js"></script>
+		<script src="directives/responsivecover.js"></script>
+		<script src="directives/contextmenu.js"></script>
+		<script src="directives/focusme.js"></script>
+		<script src="filters/displaytime.js"></script>
+		<script src="filters/timeago.js"></script>
+		<script src="controllers/player.js"></script>
+		<script src="controllers/login.js"></script>
+		<script src="controllers/playlist.js"></script>
+		<script src="controllers/home.js"></script>
+		<script src="controllers/artist.js"></script>
+		<script src="controllers/album.js"></script>
+		<script src="controllers/user.js"></script>
+		<script src="controllers/usertracks.js"></script>
+		<script src="controllers/playqueue.js"></script>
+		<script src="controllers/searchresults.js"></script>
+		<script src="controllers/browse.js"></script>
+		<script src="controllers/browsecategory.js"></script>
+	</head>
+	<body ng-controller="AppController">
+		<div class="fullview playerview" ng-show="showplayer">
+			<div ng-controller="PlayerController">
+				<div class="topgroup">
+					<div class="searchbox">
+						<input type="text" ng-model="query" ng-change="loadsearch()" ng-keyup="loadsearch()" placeholder="Search..." />
+					</div>
+					<div class="titlebox">
+						<a href="#/home">SAMPLE PLAYER APPLICATION</a>
+					</div>
+					<div class="userbox">
+						Signed in as <b><a href="#/users/{{profileUsername}}">{{profileUsername}}</a></b>
+						<a ng-click="logout()">Log out</a>
+					</div>
+				</div>
+				<div class="midgroup">
+					<div class="menuview">
+						<div class="list scrollable">
+							<b><a href="#/">MAIN</a></b>
+							<ul class="menuitems">
+								<li><a href="#/" ng-class="getClass('/')">Browse</a></li>
+							</ul>
+							<b><a href="#/me">YOUR MUSIC</a></b>
+							<ul class="menuitems">
+								<li><a href="#/users/{{username}}/tracks" ng-class="getClass('/users/{{username}}/tracks')">Songs</a></li>
+							</ul>
+							<b><a href="#/me">PLAYLISTS</a></b>
+							<ul class="menuitems">
+								<li ng-repeat="pl in playlists track by pl.id" ng-context-menu="menuOptions(pl)" ng-class="getClass('/users/{{pl.username}}/playlists/{{pl.id}}')">
+									<a href="#/users/{{pl.username}}/playlists/{{pl.id}}" ng-if="!pl.editing">
+										{{pl.name}}
+									</a>
+									<input focus-me="focusInput" ng-blur="playlistNameBlur(pl)" ng-if="pl.editing" class="edit" type="text" value="{{pl.name}}" name="title" ng-keyup="playlistNameKeyUp($event, pl)">
+								</li>
+							</ul>
+						</div>
+						<div class="preview">
+							<a href="#/albums/{{trackdata.album.id}}">
+								<responsive-cover ng-model="trackdata.album.images"></responsive-cover>
+							</a>
+							<p>
+								<b>{{trackdata.name}}</b>
+								<a href="#/artists/{{trackdata.artists[0].id}}">
+									{{trackdata.artists[0].name}}
+								</a>
+							</p>
+						</div>
+					</div>
+					<div class="mainview">
+						<div ng-view></div>
+					</div>
+				</div>
+				<div class="bottomgroup">
+					<div class="leftcontrols">
+						<div class="prevbutton">
+							<a ng-click="prev()"><img src="images/btn-prev.png" /></a>
+						</div>
 
-  <body>
-    <div class="container">
-      <div id="login">
-        <h1>This is an example of the Authorization Code flow</h1>
-        <a href="/login" class="btn btn-primary">Log in with Spotify</a>
-      </div>
-      <div id="loggedin">
-        <div id="user-profile">
-        </div>
-        <div id="oauth">
-        </div>
-        <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
-      </div>
-    </div>
+						<div class="playbutton">
+							<a ng-click="resume()" ng-hide="playing"><img src="images/btn-play.png" /></a>
+							<a ng-click="pause()" ng-show="playing"><img src="images/btn-pause.png" /></a>
+						</div>
 
-    <script id="user-profile-template" type="text/x-handlebars-template">
-      <h1>Logged in as {{display_name}}</h1>
-      <div class="media">
-        <div class="pull-left">
-          <img class="media-object" width="150" src="{{images.0.url}}" />
-        </div>
-        <div class="media-body">
-          <dl class="dl-horizontal">
-            <dt>Display name</dt><dd class="clearfix">{{display_name}}</dd>
-            <dt>Id</dt><dd>{{id}}</dd>
-            <dt>Email</dt><dd>{{email}}</dd>
-            <dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
-            <dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
-            <dt>Profile Image</dt><dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
-            <dt>Country</dt><dd>{{country}}</dd>
-          </dl>
-        </div>
-      </div>
-    </script>
+						<div class="nextbutton">
+							<a ng-click="next()"><img src="images/btn-next.png" /></a>
+						</div>
 
-    <script id="oauth-template" type="text/x-handlebars-template">
-      <h2>oAuth info</h2>
-      <dl class="dl-horizontal">
-        <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
-        <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}></dd>
-      </dl>
-    </script>
+						<div class="volume">
+							<input type="range" ng-change="changevolume()" min="0" max="100" ng-model="volume" />
+						</div>
+					</div>
+					<div class="seekcontrols">
+						<div class="progress">{{ progress | displaytime }}</div>
+						<div class="duration">{{ duration | displaytime }}</div>
+						<div class="slider">
+							<input type="range" ng-model="progress" ng-change="changeprogress()" min="0" max="{{duration}}" />
+						</div>
+					</div>
+					<div class="rightcontrols">
+						<!--
+						a ng-click="shuffle()">SHUF</a>
+						a ng-click="repeat()">REP.</a>
+						-->
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script>
-      (function() {
-
-        /**
-         * Obtains parameters from the hash of the URL
-         * @return Object
-         */
-        function getHashParams() {
-          var hashParams = {};
-          var e, r = /([^&;=]+)=?([^&;]*)/g,
-              q = window.location.hash.substring(1);
-          while ( e = r.exec(q)) {
-             hashParams[e[1]] = decodeURIComponent(e[2]);
-          }
-          return hashParams;
-        }
-
-        var userProfileSource = document.getElementById('user-profile-template').innerHTML,
-            userProfileTemplate = Handlebars.compile(userProfileSource),
-            userProfilePlaceholder = document.getElementById('user-profile');
-
-        var oauthSource = document.getElementById('oauth-template').innerHTML,
-            oauthTemplate = Handlebars.compile(oauthSource),
-            oauthPlaceholder = document.getElementById('oauth');
-
-        var params = getHashParams();
-
-        var access_token = params.access_token,
-            refresh_token = params.refresh_token,
-            error = params.error;
-
-        if (error) {
-          alert('There was an error during the authentication');
-        } else {
-          if (access_token) {
-            // render oauth info
-            oauthPlaceholder.innerHTML = oauthTemplate({
-              access_token: access_token,
-              refresh_token: refresh_token
-            });
-
-            $.ajax({
-                url: 'https://api.spotify.com/v1/me',
-                headers: {
-                  'Authorization': 'Bearer ' + access_token
-                },
-                success: function(response) {
-                  userProfilePlaceholder.innerHTML = userProfileTemplate(response);
-
-                  $('#login').hide();
-                  $('#loggedin').show();
-                }
-            });
-          } else {
-              // render initial screen
-              $('#login').show();
-              $('#loggedin').hide();
-          }
-
-          document.getElementById('obtain-new-token').addEventListener('click', function() {
-            $.ajax({
-              url: '/refresh_token',
-              data: {
-                'refresh_token': refresh_token
-              }
-            }).done(function(data) {
-              access_token = data.access_token;
-              oauthPlaceholder.innerHTML = oauthTemplate({
-                access_token: access_token,
-                refresh_token: refresh_token
-              });
-            });
-          }, false);
-        }
-      })();
-    </script>
-  </body>
+		<div class="fullview loginview" ng-show="showlogin">
+			<div ng-controller="LoginController">
+				<div class="centered">
+					<div class="inner">
+						<h1>Thirtify</h1>
+						<p>
+							This demo explores the possibilities with the Web API. To view this demo you need to sign in with your spotify account.
+						</p>
+						<a ng-click="login()" class="button big green">login</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
-
