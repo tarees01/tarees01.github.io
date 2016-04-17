@@ -1,73 +1,96 @@
-body {
-    margin:20px;
-    font-family: Verdana, Helvetica, "Lucida Grande", Arial, sans-serif;
-    font-size:12px;
-    margin:0 auto;
-    color:#f0f0f0;
-    width:700px;
-}
 
-
-#content {
-    background:#346434;
-    margin-top:20px;
-    margin-left:20px;
-    margin-right:20px;
-    padding-top:10px;
-    padding-left:20px;
-    padding-right:20px;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-}
-
-#seed {
-    text-align:center;
-}
-
-
-h1 {
-    font-size:28px;
-    font-weight:normal;
-    text-align:center;
-}
-
-#content a {
-    color: #9de0ad;
-    font-weight:bold;
-}
-
-a:link {text-decoration: none; }
-
-h2 {
-    font-size:18px;
-    text-align:center;
-}
-
-
-#all_results {
-    visible:hidden;
-}
-
-
-.box {
-    margin-right:10px;
-    margin-bottom:40px;
-    white-space: nowrap;
-    font-size:15px;
-}
-
-#info {
-    margin:20px;
-    font-size:18px;
-}
-
-.title {
-    color:#003366;
-}
-
-#footer {
-    margin-top:10px;
-    padding-bottom:10px;
-    text-align:center;
-    font-size:12px;
-}
+<html>
+<head>
+	<style>
+		body {
+			background: darkgrey; 
+			margin: 0;
+			padding-bottom: 0;
+			overflow: scroll;
+		}
+		div {
+			display: block;
+		}
+		#container {
+			border: solid 5px black;
+			position: relative;
+			top: 50px;
+		}
+		#header h1 {
+			margin: 0;
+			height: 20px;
+			font-size: 20px;
+			}
+		#header {
+			width:100%;
+			height: 40px;
+			background-color: grey;
+			
+			position:fixed;
+			z-index:1;
+			text-align: center;
+			
+		}
+		#searchbar {
+			width: 100%;
+			background: grey;
+			height: 30px;
+			display:block;
+			position: fixed;
+			top: 20px;	
+			z-index: 1;
+			text-align: center;
+		}
+		#container #wiki {
+			width: 100%;
+			background: clear;
+			height: 200;
+			overflow: scroll;
+		}
+		#container #vidbar {
+			width:100%;
+			height: 200px;
+			overflow: scroll;
+		}
+		#container #viewbox {
+			background: clear;
+			width: 100%;	
+			min-width: 640px;
+			min-height: 390px;
+			height: 420px;
+			text-align: center;
+		}
+		#player {
+		}
+		#login-link {
+			display: none;
+			}
+		.thumbs {
+				text-align: center;
+		}
+		.theseVids {
+			display: inline;
+			padding-top: 5px;
+			width: 20%;
+			float: left;
+			height: 90%;
+			text-align: center;
+		}
+		.theseVids:hover {
+			background: white;
+			}
+		.error {
+			width: 100%;
+			text-align: center;
+		}
+		.wikiResults{
+			height: 8px;
+		background-color: rgb(255, 100, 127);
+		text-align: center;
+		padding: 15px;
+		margin: 5px auto;
+		width: 5%;
+	}
+		.wikiResults:hover{
+		background-color: rgb(107, 255, 124);
+		}
