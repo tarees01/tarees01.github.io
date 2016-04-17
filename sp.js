@@ -1,145 +1,152 @@
-/**
- * This is an example of a basic node.js script that performs
- * the Authorization Code oAuth2 flow to authenticate against
- * the Spotify Accounts.
- *
- * For more information, read
- * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
- */
+(function() {
 
-var express = require('express'); // Express web server framework
-var request = require('request'); // "Request" library
-var querystring = require('querystring');
-var cookieParser = require('cookie-parser');
+	var app = angular.module('PlayerApp', ['ngRoute']);
 
-var client_id = '03ffe0cac0a0401aa6673c3cf6d02ced'; // Your client id
-var client_secret = 'a57c43efb9644574a96d6623fb8bfbc2'; // Your client secret
-var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+	app.config(function($routeProvider) {
+		$routeProvider.
+			when('/', {
+				templateUrl: 'partials/browse.html',
+				controller: 'BrowseController'
+			}).
+			when('/playqueue', {
+				templateUrl: 'partials/playqueue.html',
+				controller: 'PlayQueueController'
+			}).
+			when('/users/:username', {
+				templateUrl: 'partials/user.html',
+				controller: 'UserController'
+			}).
+			when('/users/:username/tracks', {
+				templateUrl: 'partials/usertracks.html',
+				controller: 'UserTracksController'
+			}).
+			when('/users/:username/playlists/:playlist', {
+				templateUrl: 'partials/playlist.html',
+				controller: 'PlaylistController'
+			}).
+			when('/artists/:artist', {
+				templateUrl: 'partials/artist.html',
+				controller: 'ArtistController'
+			}).
+			when('/albums/:album', {
+				templateUrl: 'partials/album.html',
+				controller: 'AlbumController'
+			}).
+			when('/search', {
+				templateUrl: 'partials/searchresults.html',
+				controller: 'SearchResultsController'
+			}).
+			when('/category/:categoryid', {
+				templateUrl: 'partials/browsecategory.html',
+				controller: 'BrowseCategoryController'
+			}).
+			otherwise({
+				redirectTo: '/'
+			});
+	});
 
-/**
- * Generates a random string containing numbers and letters
- * @param  {number} length The length of the string
- * @return {string} The generated string
- */
-var generateRandomString = function(length) {
-  var text = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	app.controller('AppController', function($scope, Auth, API, $location) {
+		console.log('in AppController');
 
-  for (var i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-};
+		console.log(location);
 
-var stateKey = 'spotify_auth_state';
+		function checkUser(redirectToLogin) {
+			API.getMe().then(function(userInfo) {
+				Auth.setUsername(userInfo.id);
+				Auth.setUserCountry(userInfo.country);
+				if (redirectToLogin) {
+					$scope.$emit('login');
+					$location.replace();
+				}
+			}, function(err) {
+				$scope.showplayer = false;
+				$scope.showlogin = true;
+				$location.replace();
+			});
+		}
 
-var app = express();
+		window.addEventListener("message", function(event) {
+			console.log('got postmessage', event);
+			var hash = JSON.parse(event.data);
+			if (hash.type == 'access_token') {
+				Auth.setAccessToken(hash.access_token, hash.expires_in || 60);
+				checkUser(true);
+			}
+  		}, false);
 
-app.use(express.static(__dirname + '/public'))
-   .use(cookieParser());
+		$scope.isLoggedIn = (Auth.getAccessToken() != '');
+		$scope.showplayer = $scope.isLoggedIn;
+		$scope.showlogin = !$scope.isLoggedIn;
 
-app.get('/login', function(req, res) {
+		$scope.$on('login', function() {
+			$scope.showplayer = true;
+			$scope.showlogin = false;
+			$location.path('/').replace().reload();
+		});
 
-  var state = generateRandomString(16);
-  res.cookie(stateKey, state);
+		$scope.$on('logout', function() {
+			$scope.showplayer = false;
+			$scope.showlogin = true;
+		});
 
-  // your application requests authorization
-  var scope = 'user-read-private user-read-email';
-  res.redirect('https://accounts.spotify.com/authorize?' +
-    querystring.stringify({
-      response_type: 'code',
-      client_id: client_id,
-      scope: scope,
-      redirect_uri: redirect_uri,
-      state: state
-    }));
-});
+		$scope.getClass = function(path) {
+			if ($location.path().substr(0, path.length) == path) {
+				return 'active';
+			} else {
+				return '';
+			}
+		};
 
-app.get('/callback', function(req, res) {
+		$scope.focusInput = false;
+		$scope.menuOptions = function(playlist) {
 
-  // your application requests refresh and access tokens
-  // after checking the state parameter
+			var visibilityEntry = [playlist.public ? 'Make secret' : 'Make public', function ($itemScope) {
+				API.changePlaylistDetails(playlist.username, playlist.id, {public: !playlist.public})
+					.then(function() {
+						playlist.public = !playlist.public;
+					});
+			}];
 
-  var code = req.query.code || null;
-  var state = req.query.state || null;
-  var storedState = req.cookies ? req.cookies[stateKey] : null;
+			var own = playlist.username === Auth.getUsername();
+			if (own) {
+				return [
+					visibilityEntry,
+					null,
+					['Rename', function ($itemScope) {
+						playlist.editing = true;
+						$scope.focusInput = true;
+				}]
+				];
+			} else {
+				return [ visibilityEntry ];
+			}
+		};
 
-  if (state === null || state !== storedState) {
-    res.redirect('/#' +
-      querystring.stringify({
-        error: 'state_mismatch'
-      }));
-  } else {
-    res.clearCookie(stateKey);
-    var authOptions = {
-      url: 'https://accounts.spotify.com/api/token',
-      form: {
-        code: code,
-        redirect_uri: redirect_uri,
-        grant_type: 'authorization_code'
-      },
-      headers: {
-        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
-      },
-      json: true
-    };
+		$scope.playlistNameKeyUp = function(event, playlist) {
+			if (event.which === 13) {
+				// enter
+				var newName = event.target.value;
+				API.changePlaylistDetails(playlist.username, playlist.id, {name: newName})
+					.then(function() {
+						playlist.name = newName;
+						playlist.editing = false;
+						$scope.focusInput = false;
+					});
+			}
 
-    request.post(authOptions, function(error, response, body) {
-      if (!error && response.statusCode === 200) {
+			if (event.which === 27) {
+				// escape
+				playlist.editing = false;
+				$scope.focusInput = false;
+			}
+		};
 
-        var access_token = body.access_token,
-            refresh_token = body.refresh_token;
+		$scope.playlistNameBlur = function(playlist) {
+			playlist.editing = false;
+			$scope.focusInput = false;
+		};
 
-        var options = {
-          url: 'https://api.spotify.com/v1/me',
-          headers: { 'Authorization': 'Bearer ' + access_token },
-          json: true
-        };
+		checkUser();
+	});
 
-        // use the access token to access the Spotify Web API
-        request.get(options, function(error, response, body) {
-          console.log(body);
-        });
-
-        // we can also pass the token to the browser to make requests from there
-        res.redirect('/#' +
-          querystring.stringify({
-            access_token: access_token,
-            refresh_token: refresh_token
-          }));
-      } else {
-        res.redirect('/#' +
-          querystring.stringify({
-            error: 'invalid_token'
-          }));
-      }
-    });
-  }
-});
-
-app.get('/refresh_token', function(req, res) {
-
-  // requesting access token from refresh token
-  var refresh_token = req.query.refresh_token;
-  var authOptions = {
-    url: 'https://accounts.spotify.com/api/token',
-    headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
-    form: {
-      grant_type: 'refresh_token',
-      refresh_token: refresh_token
-    },
-    json: true
-  };
-
-  request.post(authOptions, function(error, response, body) {
-    if (!error && response.statusCode === 200) {
-      var access_token = body.access_token;
-      res.send({
-        'access_token': access_token
-      });
-    }
-  });
-});
-
-console.log('Listening on 8888');
-app.listen(8888);
+})();
