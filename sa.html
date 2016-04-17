@@ -19,7 +19,7 @@
         <span> Enter artist:
              <input title="Artist" type="text"  size=34 id="artist" name="artist" value='God is an Astronaut'/>
         </span>
-        <button value="search" id="search" name="search"> search </button>
+        <button value="search" id="search-button" name="search"> search </button>
     </div>
     <div id='searchbar'> 
 	<div id="buttons">
@@ -80,7 +80,7 @@ function initUI() {
             newArtist();
         }
     });
-    $("#search").on("click", function() {
+    $("#search-button").on("click", function() {
         newArtist();
     });
 }
