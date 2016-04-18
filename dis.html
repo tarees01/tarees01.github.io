@@ -12,13 +12,15 @@
 		font-family: "Times New Roman", Times, serif;
 		
 		}
-	#seed{
-	       background-color: gray;
-	        text-align: center;
-		margin: 0px;
-		padding:0px;
-		font-family: "Times New Roman", Times, serif;
-		
+	#seed {
+		width: 100%;
+		background: grey;
+		height: 30px;
+		display:block;
+		position: fixed;
+		top: 20px;	
+		z-index: 1;
+		text-align: center;
 		}
         #bodyDOM{
             height:380px;
@@ -61,14 +63,12 @@
             position: absolute;
             text-align: left;
         }
-        #wiki{
-            border: 5px gray;
-            height: 570px;
-            float:right;
-            width: 610px;
-            margin-top: 45px;
-            margin-right: 10px;
-            background-color:#fdb301;
+        #container #wiki {	
+                width: 100%;
+		background: clear;
+		height: 200;
+		overflow: scroll;
+		
         }
         #display{
             border: 5px gray;
@@ -368,9 +368,15 @@
         <body>
         <div id="bodyDOM">
     	<div id="map-canvas"></div>
-    	<div id ="wiki">
-    	<pre id="response" ></pre>	
-    	</div>
+    	
+    	<div id="container">
+        <div id= 'wiki' height='200'> 
+        <!--<form id="s-form">
+	<input type="text" style="width: 300px" />
+	<button type="button">Искать</button>
+	</form>-->
+	<div style="font-size: 12px; font-family: 'Arial'; width: 100%; border: 1px solid black; padding: 20px; overflow: scroll;" id="content"></div>
+	</div>
     	<!--<div id="panel1">
         <input id="videoNum" type="textbox" placeholder="Enter # of Videos">
     	</div>-->
