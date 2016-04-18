@@ -12,14 +12,6 @@
 		font-family: "Times New Roman", Times, serif;
 		
 		}
-	#seed{
-	   background-color: gray;
-	   text-align: center;
-	   margin: 0px;
-	   padding:0px;
-	   font-family: "Times New Roman", Times, serif;
-		
-		}
         #bodyDOM{
             height:380px;
             margin: 0px;
@@ -78,21 +70,6 @@
             border: 1px solid #999;
             width:395px;
       }
-      .wikiResults{
-		height: 8px;
-		background-color: rgb(255, 100, 127);
-		text-align: center;
-		padding: 15px;
-		margin: 5px auto;
-		width: 5%;
-	}
-	#wiki {
-		width: 100%;
-		background: clear;
-		height: 300;
-		overflow: scroll;
-		}
-	
      /* #panel1 {
             position: absolute;
             top: 5px;
@@ -368,27 +345,23 @@
     	<!--<input id="artist" type="textbox" placeholder="Enter city/state/country Name">
         <input type="button" value="Enter" onclick="codeAddress()">
         </div> -->
-      <div id='content' class="container font-light">
+        <div id='content' class="container font-light">
       <br>
        <div id='seed' class='centered'>
-        <span> Enter the place you want to visit :
+        span> Enter country name :
              <input title="Artist" type="text"  size=34 id="artist" name="artist" value=''/>
         </span>
         <button value="search" id="search-button" onclick="codeAddress()" name="search"> search </button> 
       </div>
       </div>
- 
+        <!--<input id="query" id="address" value='' type="text"/> 
+        <button id="search-button"  onclick = "codeAddress();"> Search </button>
+        </div> -->
         <div id="display">
         <h3 style="color:white;float:center;display:inline-block;">Videos You Want To See</h3>
         <pre id="response" ></pre>
         </div>
-       
-        <div id= 'wiki' height='200'> 
-	<!--<form id="s-form">
-	<input type="text" style="width: 300px" />
-	<button type="button">Искать</button>
-	</form>-->
-	<div style="font-size: 12px; font-family: 'Arial'; width: 100%; border: 1px solid black; padding: 20px; overflow: scroll;" id="content"></div>
         </div>
+        
     </body>
 </html
