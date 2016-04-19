@@ -205,7 +205,7 @@
         // Use the JavaScript client library to create a search.list() API call.
             var videoURL ="https://www.googleapis.com/youtube/v3/videoCategories?part=snippet&regionCode=NP&key=AIzaSyAiy1Op3hMxBzP_GJARcMqgf-Fv3oIg1mo";
             
-            var qVar = document.getElementById("artist").value;
+            var qVar = document.getElementById("address").value;
             //console.log(qVar); prints correct
           //var videoNum=document.getElementById("videoNum").value;
             //console.log(videoNum);
@@ -260,7 +260,7 @@
             showResponse(stTitle, stVideoId,dateTime,thumbnailsURL);
         }
         function search() {
-            var address = document.getElementById('artist').value;
+            var address = document.getElementById('address').value;
             //console.log(address); prints correct
             geocoder.geocode( { 'address': address}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
