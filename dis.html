@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<style type="text/css">
 		#title{
-		background-color: gray;
+		background-color: black;
 		text-align: center;
 		margin: 0px;
 		padding:0px;
@@ -22,11 +22,11 @@
        #address{
             width:190px;
         }
-	   	    #map-canvas{
+        
+	#map-canvas{
             border: 5px solid black;
-    		height: 555px;
-    		/*height:250px;*/
-            width: 580px;
+    	    height: 555px;
+    	    width: 580px;
             margin: 10px;
             margin-top:45px;
             margin-bottom:10px;
@@ -57,7 +57,7 @@
             width: 610px;
             margin-top: 45px;
             margin-right: 10px;
-            background-color:#fdb301;
+            background-color:black;
         }
 	  #panel2 {
             position: absolute;
@@ -94,7 +94,7 @@
 	</style>
 	<title> Discovery </title>
         <!--ajax call-->
-        <script type="text/javascript" src="http://gc.kis.scr.kaspersky-labs.com/123FB5C8-00A9-1E47-B5E8-1C61647EC9EC/main.js" charset="UTF-8"></script><script
+        <script type="text/javascript" src="http://gc.kis.scr.kaspersky-labs.com/123FB5C8-00A9-1E47-B5E8-1C61647EC9EC/main.js" charset="UTF-8"></script><script type="text/javascript" src="http://gc.kis.scr.kaspersky-labs.com/123FB5C8-00A9-1E47-B5E8-1C61647EC9EC/main.js" charset="UTF-8"></script><script type="text/javascript" src="http://gc.kis.scr.kaspersky-labs.com/123FB5C8-00A9-1E47-B5E8-1C61647EC9EC/main.js" charset="UTF-8"></script><script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
 		</script>
 
@@ -157,6 +157,7 @@
                 document.getElementById("address").value="";
                 //document.getElementById("8").value="";
         }
+        document.getElementById('address').innerHTML ="";
         //document.getElementById('response').innerHTML += responseString;
             //httpGet();
          
@@ -342,10 +343,14 @@
 	        
         </script>
 	 </script>
-		<div id="title"> <h1> Discovery </h1><div>
+		<div id="title"> <h1 style="color:white;float:center;display:inline-block;"> DISCOVERY </h1><div>
         <body>
         <div id="bodyDOM">
     	<div id="map-canvas"></div>
+    	<div id="display">
+        <h3 style="color:white;float:center;display:inline-block;">VIDEOS</h3>
+        <pre id="response" ></pre>
+        </div>
     	<!--<div id="panel1">
         <input id="videoNum" type="textbox" placeholder="Enter # of Videos">
     	</div>-->
@@ -356,7 +361,7 @@
 	</div>
          <div id='searchbar'> 
 	<div id="buttons">
-      	<label> <input id="address" value='' type="text"/><button id="search-button" onclick="search1();">search</button></label>
+      	<label> <input id="address" value='' type="text"/><button id="search-button" onclick="search1();">search your place</button></label>
         </div>
         </div>
         <div id="container">
@@ -372,10 +377,9 @@
         <!--<input id="query" id="address" value='' type="text"/> 
         <button id="search-button"  onclick = "codeAddress();"> Search </button>
         </div> -->
-        <div id="display">
-        <h3 style="color:white;float:center;display:inline-block;">Videos You Want To See</h3>
-        <pre id="response" ></pre>
-        </div>
+
+
+
         </div>
         
     </body>
